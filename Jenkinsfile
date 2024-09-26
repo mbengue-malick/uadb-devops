@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build docker image') {
             steps {
-                bat 'docker build -t uabd-devops .'
+                bat 'docker build -t uadb-devops .'
             }
         }
 
