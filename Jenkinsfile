@@ -2,19 +2,20 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Build docker image') {
             steps {
-                echo 'Ici nous faisons le build du code'
+                bat 'docker build -t uabd-devops .'
             }
         }
-        stage('Test') {
+
+        stage('Tag docker image') {
             steps {
-                echo 'On fait un test d integration continue'
+                bat 'docker tag uadb-devops malicksn/uadb-devops:v1'
             }
         }
-        stage('Deploy') {
+        stage('List docker images') {
             steps {
-                echo 'Nous deployons vers l environnment prod'
+                bat 'docker images'
             }
         }
     }
