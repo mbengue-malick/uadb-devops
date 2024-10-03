@@ -17,7 +17,9 @@ pipeline {
         
         stage('Build docker') {
             steps {
-                bat 'docker login -u malicksn --password-stdin < %REGISTRY_PASSWORD%'
+                bat 'echo %REGISTRY_PASSWORD% > password.txt'
+                bat 'docker login -u malicksn --password-stdin < password.txt'
+                bat 'del password.txt'
                 bat 'docker push malicksn/uadb-devops:test'
             }
     }
