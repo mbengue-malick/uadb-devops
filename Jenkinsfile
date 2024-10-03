@@ -10,14 +10,14 @@ pipeline {
 
         stage('Tag docker image') {
             steps {
-                bat 'docker tag uadb-devops malicksn/uadb-devops:v1'
+                bat 'docker tag uadb-devops malicksn/uadb-devops:test'
             }
         }
         
         stage('Build docker') {
             steps {
                 bat 'echo ${REGISTRY_PASSWORD} | docker login -u ${REGISTRY_USER} --password-stdin'
-                sh 'docker push malicksn/uadb-devops:test'
+                bat 'docker push malicksn/uadb-devops:test'
             }
     }
     }
