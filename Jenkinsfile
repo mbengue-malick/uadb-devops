@@ -11,7 +11,7 @@ pipeline {
         stage('Tag docker image') {
             steps {
                 bat 'docker tag uadb-devops malicksn/uadb-devops:test'
-                bat 'echo ${REGISTRY_PASSWORD} 
+                bat 'echo ${REGISTRY_PASSWORD}'
             }
         }
         
