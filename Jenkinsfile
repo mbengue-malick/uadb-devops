@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+    kubernetes {
+      yamlFile 'manifests/builder.yaml'
+    }
+  }
 
     environment {
         REGISTRY_PASSWORD = credentials('REGISTRY_PASSWORD')
@@ -8,22 +12,24 @@ pipeline {
     stages {
         stage('Build docker image') {
                 steps {
-                bat 'docker build -t uadb-devops .'
+                container('docker') {
+                sh 'docker build -t uadb-devops .'
+                }
             }
             
         }
 
-        stage('Tag docker image') {
+ /*        stage('Tag docker image') {
             steps {
-                bat 'docker tag uadb-devops malicksn/uadb-devops:test'
+                sh 'docker tag uadb-devops malicksn/uadb-devops:test'
             }
         }
         
         stage('Build docker') {
             steps {
-                bat 'echo %REGISTRY_PASSWORD% | docker login -u malicksn --password-stdin'
-                bat 'docker push malicksn/uadb-devops:test'
+                sh 'echo %REGISTRY_PASSWORD% | docker login -u malicksn --password-stdin'
+                sh 'docker push malicksn/uadb-devops:test'
             }
-    }
+    } */
     }
 }
