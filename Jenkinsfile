@@ -7,10 +7,8 @@ pipeline {
 
     stages {
         stage('Build docker image') {
-            agent docker {
                 steps {
                 bat 'docker build -t uadb-devops .'
-            }
             }
             
         }
