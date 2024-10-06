@@ -5,7 +5,8 @@ pipeline {
             agent { label 'dind-agent' }
             steps {
                 script {
-                    docker.build('malicksn/uadb-devops:v1').push('malicksn/uadb-devops:v1')
+                    docker.build('malicksn/uadb-devops:v1')
+                    docker.push('malicksn/uadb-devops:v1')
                 }
             }
         }
