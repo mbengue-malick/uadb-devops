@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    walloo24: build
+spec:
+  volumes:
+  - name: docker-socket
+    hostPath:
+      path: /var/run/docker.sock
+  containers:
+  - name: docker
+    image: docker:20.10.16
+    env:
+    - name: DOCKER_TLS_CERTDIR
+      value: ""
+    command:
+    - sleep
+    args:
+    - 99d
+    volumeMounts:
+    - name: docker-socket
+      mountPath: /var/run/docker.sock
+  - name: kubectl
+    image: joshendriks/alpine-k8s
+    command: 
+    - /bin/cat
+    tty: true

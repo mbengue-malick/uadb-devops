@@ -1,35 +1,22 @@
 pipeline {
-    agent {
-    kubernetes {
-      yamlFile 'manifests/builder.yaml'
-    }
-  }
-
-    environment {
-        REGISTRY_PASSWORD = credentials('REGISTRY_PASSWORD')
-    }
-
+    agent { label 'dind-agent' }  // Utiliser l'agent Docker DinD
     stages {
-        stage('Build docker image') {
-                steps {
-                container('docker') {
-                sh 'docker build -t uadb-devops .'
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t my-app:latest .'
+                    sh 'docker tag my-app:latest my-registry/my-app:latest'
+                    sh 'docker push my-registry/my-app:latest'
                 }
             }
-            
         }
-
- /*        stage('Tag docker image') {
+        stage('Deploy to Kubernetes') {
+            agent { label 'kubectl-agent' }  // Utiliser l'agent kubectl
             steps {
-                sh 'docker tag uadb-devops malicksn/uadb-devops:test'
+                script {
+                    sh 'kubectl apply -f k8s/deployment.yaml'
+                }
             }
         }
-        
-        stage('Build docker') {
-            steps {
-                sh 'echo %REGISTRY_PASSWORD% | docker login -u malicksn --password-stdin'
-                sh 'docker push malicksn/uadb-devops:test'
-            }
-    } */
     }
 }
