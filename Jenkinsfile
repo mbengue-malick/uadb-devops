@@ -12,7 +12,9 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
+                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
                 bat 'docker push malicksn/uadb-devops:v2'
+        }
                 // script {
                 //     uadbDevops.push()
                 // }
