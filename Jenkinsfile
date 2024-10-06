@@ -6,14 +6,14 @@ pipeline {
         stage('Build Docker Image') {
             agent { label 'dind-agent' }
             steps {
-                uadb-devops = docker.build('malicksn/uadb-devops:v1')
+                uadbDevops = docker.build('malicksn/uadb-devops:v1')
             }
         }
 
         stage('Push Docker Image') {
             agent { label 'dind-agent' }
             steps {
-                uadb-devops.push()
+                uadbDevops.push()
             }
         }
 
