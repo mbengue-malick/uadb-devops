@@ -4,7 +4,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    uadbDevops = docker.build('malicksn/uadb-devops:v1')
                     bat 'docker images'
                 }
             }
