@@ -1,21 +1,18 @@
 pipeline {
-    agent { label 'dind-agent' }  // Utiliser l'agent Docker DinD
+    agent none
     stages {
         stage('Build Docker Image') {
+            agent { label 'dind-agent' }
             steps {
                 script {
-                    sh 'docker build -t my-app:latest .'
-                    sh 'docker tag my-app:latest my-registry/my-app:latest'
-                    sh 'docker push my-registry/my-app:latest'
+                    docker.build('malicksn/uadb-devops:v1').push('malicksn/uadb-devops:v1')
                 }
             }
         }
         stage('Deploy to Kubernetes') {
-            agent { label 'kubectl-agent' }  // Utiliser l'agent kubectl
+            agent { label 'kubectl-agent' }
             steps {
-                script {
-                    sh 'kubectl apply -f k8s/deployment.yaml'
-                }
+                bat 'kubectl get pods'
             }
         }
     }
