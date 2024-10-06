@@ -1,19 +1,23 @@
 pipeline {
     environment {
-        uadb-devops
+        uadb-devops = ''
     }
     stages {
         stage('Build Docker Image') {
             agent { label 'dind-agent' }
             steps {
-                uadbDevops = docker.build('malicksn/uadb-devops:v1')
+                script {
+                    uadbDevops = docker.build('malicksn/uadb-devops:v1')
+                }
             }
         }
 
         stage('Push Docker Image') {
             agent { label 'dind-agent' }
             steps {
-                uadbDevops.push()
+                script {
+                    uadbDevops.push()
+                }
             }
         }
 
