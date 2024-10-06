@@ -1,7 +1,4 @@
 pipeline {
-    environment {
-        uadb-devops = ''
-    }
     stages {
         stage('Build Docker Image') {
             agent { label 'dind-agent' }
