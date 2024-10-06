@@ -2,27 +2,25 @@ pipeline {
     agent any
     stages {
         stage('Build Docker Image') {
+            agent { label 'dind-agent' }
             steps {
-                bat 'docker build -t malicksn/uadb-devops:v3 .'
-                // script {
-                //     uadbDevops = docker.build('malicksn/uadb-devops:v2')
-                // }
+                script {
+                    uadbDevops = docker.build('malicksn/uadb-devops:v1')
+                }
             }
         }
 
         stage('Push Docker Image') {
+            agent { label 'dind-agent' }
             steps {
-                
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                bat 'docker push malicksn/uadb-devops:v2'
-        }
-                    // uadbDevops.push()
+                    uadbDevops.push()
                 }
             }
         }
 
         stage('Deploy to Kubernetes') {
+            agent { label 'kubectl-agent' }
             steps {
                 bat 'kubectl apply -f deployment.yaml -f service.yaml'
             }
