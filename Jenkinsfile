@@ -6,7 +6,7 @@ agent any
             agent { label 'ci_agent' }
             steps {
                 script {
-                    uadbDevops = docker.build('malicksn/uadb-devops:v1')
+                    uadbDevops = docker.build('malicksn/uadb-devops:v1.0.1')
                 }
             }
         }
