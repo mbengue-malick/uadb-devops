@@ -19,6 +19,13 @@ agent any
                 }
             }
         }
+
+         stage('Deploy to Kubernetes') {
+            agent { label 'ci_agent' }
+            steps {
+                bat 'kubectl apply -f manifests'
+            }
+        }
     }
 
 }

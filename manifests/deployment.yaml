@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uadb-devops
+spec:
+  selector:
+    matchLabels:
+      app: uadb-devops
+  template:
+    metadata:
+      labels:
+        app: uadb-devops
+    spec:
+      containers:
+      - name: uadb-devops
+        image: malicksn/uadb-devops:v1.0.1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
