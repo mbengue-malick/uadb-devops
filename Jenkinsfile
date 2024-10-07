@@ -6,7 +6,16 @@ agent any
             agent { label 'ci_agent' }
             steps {
                 script {
-                    uadbDevops = docker.build('malicksn/uadb-devops:v1')
+                    docker.build('malicksn/uadb-devops:v1')
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            agent { label 'ci_agent' }
+            steps {
+                script {
+                    docker.push('malicksn/uadb-devops:v1')
                 }
             }
         }
