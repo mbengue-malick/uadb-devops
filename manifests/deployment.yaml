@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: uadb-devops
-        image: malicksn/uadb-devops:v1.0.2
+        image: malicksn/uadb-devops:v1.0.1
         resources:
           limits:
             memory: "128Mi"
